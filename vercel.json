@@ -13,6 +13,12 @@
       ]
     },
     {
+      "source": "/(.*)\\.(html|css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
       "source": "/(.*)\\.(svg|jpg|jpeg|png|webp|woff|woff2)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
