@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Cambiá el dominio por el tuyo cuando lo tengas
-Sitemap: https://libreria-express.vercel.app/sitemap.xml
