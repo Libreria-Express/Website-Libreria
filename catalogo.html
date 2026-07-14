@@ -17,6 +17,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="estilos.css?v=2" />
   <link rel="stylesheet" href="catalogo.css?v=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1941839209803578');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1941839209803578&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -30,6 +48,7 @@
       <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>
       <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
       <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+      <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
     </defs>
   </svg>
 
@@ -42,7 +61,7 @@
         <a href="catalogo.html" class="activo">Catálogo y Precios</a>
         <a href="index.html#empresas">Empresas</a>
         <a href="index.html#faq">Preguntas Frecuentes</a>
-        <a href="index.html#contacto">Ubicación</a>
+        <a href="https://www.google.com/maps/place/Libreria+express/@-26.8488501,-65.283862,17z/data=!3m1!4b1!4m6!3m5!1s0x94225d0061b5cf05:0x26a78c64399c129e!8m2!3d-26.8488501!4d-65.2812871!16s%2Fg%2F11yz6x7pq7" target="_blank" rel="noopener" data-ventana="mapa">Ubicación</a>
       </nav>
       <div class="nav__cta">
         <a class="btn btn--navy" href="https://wa.me/5493816090957?text=Hola%20Librer%C3%ADa%20Express!" target="_blank" rel="noopener"><svg class="ico"><use href="#i-message"/></svg> WhatsApp</a>
@@ -56,6 +75,10 @@
       <span class="badge"><span class="dot"></span> Precios mayoristas actualizados</span>
       <h1>Catálogo y <span class="verde">precios</span></h1>
       <p class="lead">Buscá tus productos, agregalos al pedido y enviálo directo por WhatsApp. Compra mínima $80.000 · Envío sin cargo en Gran San Miguel de Tucumán.</p>
+
+      <a class="btn btn--ghost-dark btn--ubicacion" href="https://www.google.com/maps/place/Libreria+express/@-26.8488501,-65.283862,17z/data=!3m1!4b1!4m6!3m5!1s0x94225d0061b5cf05:0x26a78c64399c129e!8m2!3d-26.8488501!4d-65.2812871!16s%2Fg%2F11yz6x7pq7" target="_blank" rel="noopener" data-ventana="mapa">
+        <svg class="ico"><use href="#i-map-pin"/></svg> Ver ubicación
+      </a>
 
       <div class="catalogo-toolbar">
         <label class="buscador">

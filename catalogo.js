@@ -4,6 +4,14 @@
   const CART_KEY = 'le_pedido_v1'
   const MONTO_MINIMO = 80000
 
+  function trackearEvento(nombre, datos) {
+    if (typeof window.fbq === 'function') window.fbq('track', nombre, datos)
+  }
+
+  function trackearEventoCustom(nombre, datos) {
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', nombre, datos)
+  }
+
   const els = {
     buscador: document.getElementById('buscador-input'),
     filtroCat: document.getElementById('filtro-cat'),
@@ -301,11 +309,20 @@
   function setCantidad(id, cantidad) {
     const producto = productoPorId(id)
     if (!producto) return
+    const cantidadAnterior = cart[id]?.cantidad || 0
     const cantidadFinal = Math.max(0, Math.min(999, cantidad))
     if (cantidadFinal === 0) {
       delete cart[id]
     } else {
       cart[id] = { categoria: producto.categoria, producto: producto.producto, precio: producto.precio, cantidad: cantidadFinal }
+    }
+    if (cantidadFinal > cantidadAnterior) {
+      trackearEvento('AddToCart', {
+        content_name: producto.producto,
+        content_category: producto.categoria,
+        value: producto.precio,
+        currency: 'ARS',
+      })
     }
     guardarCarrito()
     actualizarCantidadEnFila(id)
@@ -387,7 +404,14 @@
 
   function enviarPedidoPorWhatsApp() {
     if (!Object.keys(cart).length) return
-    if (calcularTotal() < MONTO_MINIMO) return // el botón ya está deshabilitado; defensa extra
+    const total = calcularTotal()
+    if (total < MONTO_MINIMO) return // el botón ya está deshabilitado; defensa extra
+    trackearEvento('Lead', {
+      content_name: 'Pedido catálogo web',
+      value: total,
+      currency: 'ARS',
+      num_items: Object.values(cart).reduce((acc, item) => acc + item.cantidad, 0),
+    })
     const url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(construirMensajeWhatsApp())
     window.open(url, '_blank', 'noopener,noreferrer')
   }
@@ -478,6 +502,14 @@
     if (e.key !== 'Escape') return
     if (els.panel.classList.contains('activo')) cerrarPedido()
     if (!els.filtroCatPanel.hidden) cerrarPanelCategorias()
+  })
+
+  document.querySelectorAll('[data-ventana]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault()
+      trackearEventoCustom('VerUbicacion', { pagina: 'catalogo' })
+      window.open(a.href, 'libreria_express_ubicacion', 'width=900,height=700,noopener,noreferrer')
+    })
   })
 
   async function init() {

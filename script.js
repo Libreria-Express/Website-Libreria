@@ -39,6 +39,14 @@ if (formMsg) {
   })
 }
 
+// --- Trackear clicks en el link de ubicación (Google Maps) ---
+const linkUbicacion = document.querySelector('a[href*="google.com/maps"]')
+if (linkUbicacion) {
+  linkUbicacion.addEventListener('click', function () {
+    if (typeof window.fbq === 'function') window.fbq('trackCustom', 'VerUbicacion', { pagina: 'home' })
+  })
+}
+
 // --- Cerrar el menú móvil al hacer clic en un enlace ---
 const menuToggle = document.getElementById('menu-toggle')
 if (menuToggle) {

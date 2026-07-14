@@ -10,6 +10,8 @@
 .catalogo-hero { padding: 32px 24px 8px; }
 .catalogo-hero h1 { font-size: clamp(30px, 4.5vw, 46px); margin-top: 14px; }
 .catalogo-hero .lead { max-width: 46rem; margin-top: 12px; color: rgba(10,15,28,.65); font-size: 16px; }
+.btn--ubicacion { margin-top: 16px; font-size: 14px; padding: 10px 18px; }
+.btn--ubicacion .ico { width: 16px; height: 16px; }
 
 /* El .badge de estilos.css está pensado para el hero oscuro de la home;
    acá el fondo es claro, así que se redefinen sus colores. */
@@ -221,7 +223,6 @@
   .catalogo-toolbar { flex-direction: column; }
   .buscador { flex-basis: auto; }
   .filtro-cat { flex-basis: auto; }
-  .cat-grupo__titulo { top: 0; }
   .prod { flex-direction: column; align-items: flex-start; }
   .prod__acciones { width: 100%; justify-content: flex-end; }
   .pedido-flotante span:not(.pedido-flotante__badge) { display: none; }
