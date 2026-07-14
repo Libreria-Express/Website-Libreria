@@ -16,10 +16,10 @@ if (formCorp) {
     const d = new FormData(formCorp)
     const msg =
       '*Solicitud de Cotización Corporativa — Cuentas Pymes*\n\n' +
-      '🏢 Empresa: ' + (d.get('empresa') || '') + '\n' +
-      '👤 Contacto: ' + (d.get('contacto') || '') + '\n' +
-      '👥 Empleados aprox.: ' + (d.get('empleados') || '') + '\n' +
-      '📦 Insumos habituales: ' + (d.get('insumos') || '(a definir)')
+      'Empresa: ' + (d.get('empresa') || '') + '\n' +
+      'Contacto: ' + (d.get('contacto') || '') + '\n' +
+      'Empleados aprox.: ' + (d.get('empleados') || '') + '\n' +
+      'Insumos habituales: ' + (d.get('insumos') || '(a definir)')
     abrirWhatsApp(msg)
   })
 }
@@ -32,9 +32,9 @@ if (formMsg) {
     const d = new FormData(formMsg)
     const msg =
       '*Mensaje Directo desde la web*\n\n' +
-      '👤 Nombre: ' + (d.get('nombre') || '') + '\n' +
-      '📱 Teléfono: ' + (d.get('telefono') || '(no indicado)') + '\n' +
-      '💬 Consulta: ' + (d.get('ayuda') || '')
+      'Nombre: ' + (d.get('nombre') || '') + '\n' +
+      'Teléfono: ' + (d.get('telefono') || '(no indicado)') + '\n' +
+      'Consulta: ' + (d.get('ayuda') || '')
     abrirWhatsApp(msg)
   })
 }

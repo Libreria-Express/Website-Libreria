@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración | Librería Express</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="theme-color" content="#003e7b" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,700,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos.css?v=2" />
+  <link rel="stylesheet" href="admin.css?v=1" />
+</head>
+<body class="admin-body">
+
+  <main class="admin-main">
+    <div class="admin-wrap">
+      <a href="index.html#top" class="admin-logo"><img src="logo.svg" alt="Librería Express" /></a>
+
+      <section id="vista-cargando" class="admin-card">
+        <p>Verificando sesión…</p>
+      </section>
+
+      <section id="vista-login" class="admin-card" hidden>
+        <h1>Acceso administrador</h1>
+        <p class="admin-sub">Ingresá la contraseña para actualizar el catálogo de precios.</p>
+        <form id="form-login">
+          <label>Contraseña
+            <input type="password" name="password" required autocomplete="current-password" />
+          </label>
+          <button type="submit" class="btn btn--navy btn--block">Entrar</button>
+          <p class="admin-error" id="login-error" hidden></p>
+        </form>
+      </section>
+
+      <section id="vista-panel" class="admin-card admin-card--ancho" hidden>
+        <div class="admin-head">
+          <div>
+            <h1>Panel de administración</h1>
+            <p class="admin-sub" id="panel-meta"></p>
+          </div>
+          <button type="button" class="admin-logout" id="btn-logout">Cerrar sesión</button>
+        </div>
+
+        <div class="admin-grid">
+          <div class="admin-bloque">
+            <h2>1. Descargar el catálogo actual</h2>
+            <p>Bajá el Excel con los precios que están hoy publicados en la web para editarlo.</p>
+            <a class="btn btn--navy" id="btn-descargar" href="/api/catalogo-excel" download="catalogo-libreria-express.xlsx">Descargar Excel actual</a>
+          </div>
+
+          <div class="admin-bloque">
+            <h2>2. Subir el Excel actualizado</h2>
+            <p>Editá los precios en el archivo descargado (no cambies los nombres de las columnas) y subilo acá.</p>
+            <input type="file" id="input-excel" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            <button type="button" class="btn btn--green" id="btn-subir" disabled>Subir y actualizar precios</button>
+            <div id="resultado-subida" class="admin-resultado"></div>
+          </div>
+        </div>
+
+        <div class="admin-ayuda">
+          <h2>Formato del Excel</h2>
+          <p>Podés subir directamente el Excel tal cual lo exporta el sistema interno (la lista agrupada por familia, igual a la lista de precios de siempre) — se reconoce automáticamente, sin necesidad de reformatear nada.</p>
+          <p>También se acepta una planilla simple con estas tres columnas (en cualquier orden, con estos nombres exactos):</p>
+          <table class="admin-tabla">
+            <thead><tr><th>Categoria</th><th>Producto</th><th>Precio</th></tr></thead>
+            <tbody>
+              <tr><td>Resmas</td><td>Resma A4 Chamex x 500 hojas</td><td>5500</td></tr>
+              <tr><td>Escritura</td><td>Bolígrafo Bic Cristal Azul</td><td>350,50</td></tr>
+            </tbody>
+          </table>
+          <p class="admin-nota">Las filas sin categoría, sin producto o con un precio inválido se descartan automáticamente y se avisa cuáles fueron.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="admin.js?v=1"></script>
+</body>
+</html>

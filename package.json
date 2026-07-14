@@ -1,0 +1,10 @@
+{
+  "name": "libreria-express-web",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sitio de Librería Express: marketing estático + catálogo de precios + admin",
+  "dependencies": {
+    "@vercel/blob": "^2.6.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

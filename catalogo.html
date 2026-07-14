@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo y Precios | Librería Express</title>
+  <meta name="description" content="Buscá productos y precios mayoristas de Librería Express, armá tu pedido y envialo directo por WhatsApp." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <meta name="theme-color" content="#003e7b" />
+  <link rel="canonical" href="https://www.libreriaexpress.com.ar/catalogo" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos.css?v=2" />
+  <link rel="stylesheet" href="catalogo.css?v=1" />
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 2.5h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6l1.2-6.4H6.1"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="nav">
+    <div class="contenedor nav__row">
+      <a href="index.html#top" class="nav__logo"><img src="logo.svg" alt="Librería Express" /></a>
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+      <nav class="nav__links">
+        <a href="index.html#categorias">Categorías</a>
+        <a href="catalogo.html" class="activo">Catálogo y Precios</a>
+        <a href="index.html#empresas">Empresas</a>
+        <a href="index.html#faq">Preguntas Frecuentes</a>
+        <a href="index.html#contacto">Ubicación</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn--navy" href="https://wa.me/5493816090957?text=Hola%20Librer%C3%ADa%20Express!" target="_blank" rel="noopener"><svg class="ico"><use href="#i-message"/></svg> WhatsApp</a>
+        <label for="menu-toggle" class="nav__burger" aria-label="Abrir menú"><span></span><span></span><span></span></label>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="catalogo-main">
+    <section class="contenedor catalogo-hero">
+      <span class="badge"><span class="dot"></span> Precios mayoristas actualizados</span>
+      <h1>Catálogo y <span class="verde">precios</span></h1>
+      <p class="lead">Buscá tus productos, agregalos al pedido y enviálo directo por WhatsApp. Compra mínima $80.000 · Envío sin cargo en Gran San Miguel de Tucumán.</p>
+
+      <div class="catalogo-toolbar">
+        <label class="buscador">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <input type="search" id="buscador-input" placeholder="Buscar producto: resma A4, corrector, cuaderno..." autocomplete="off" />
+        </label>
+        <div class="filtro-cat" id="filtro-cat">
+          <button type="button" class="filtro-cat__btn" id="filtro-cat-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span id="filtro-cat-label">Todas las categorías</span>
+            <svg class="ico"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="filtro-cat__panel" id="filtro-cat-panel" hidden>
+            <label class="filtro-cat__buscar">
+              <svg class="ico"><use href="#i-search"/></svg>
+              <input type="search" id="filtro-cat-buscar" placeholder="Buscar categoría..." autocomplete="off" />
+            </label>
+            <button type="button" class="filtro-cat__limpiar" id="filtro-cat-limpiar">Limpiar selección</button>
+            <ul class="filtro-cat__lista" id="filtro-cat-lista"></ul>
+          </div>
+        </div>
+      </div>
+      <p class="catalogo-meta" id="catalogo-meta">Cargando catálogo…</p>
+    </section>
+
+    <section class="contenedor" id="catalogo-lista">
+      <p class="catalogo-cargando">Cargando catálogo…</p>
+    </section>
+  </main>
+
+  <button class="pedido-flotante" id="btn-abrir-pedido" type="button" aria-label="Ver pedido">
+    <svg class="ico"><use href="#i-cart"/></svg>
+    <span>Pedido</span>
+    <span class="pedido-flotante__badge" id="pedido-badge" hidden>0</span>
+  </button>
+
+  <div class="pedido-overlay" id="pedido-overlay" hidden></div>
+  <aside class="pedido-panel" id="pedido-panel" aria-hidden="true">
+    <div class="pedido-panel__head">
+      <h2>Tu pedido</h2>
+      <button class="pedido-panel__cerrar" id="btn-cerrar-pedido" type="button" aria-label="Cerrar pedido">
+        <svg class="ico"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <div class="pedido-panel__lista" id="pedido-lista">
+      <p class="pedido-panel__vacio">Todavía no agregaste productos. Buscá en el catálogo y tocá “Agregar”.</p>
+    </div>
+    <div class="pedido-panel__resumen">
+      <div class="pedido-panel__total"><span>Total estimado</span><strong id="pedido-total">$0</strong></div>
+      <p class="pedido-panel__minimo" id="pedido-minimo-aviso" hidden></p>
+      <button class="btn btn--green btn--block" id="btn-enviar-pedido" type="button">
+        <svg class="ico"><use href="#i-message"/></svg> Enviar pedido por WhatsApp
+      </button>
+      <button class="pedido-panel__vaciar" id="btn-vaciar-pedido" type="button">Vaciar pedido</button>
+      <p class="pedido-panel__nota">Los precios son mayoristas y están sujetos a confirmación de stock. Compra mínima $80.000.</p>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="contenedor footer__card">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img src="logo.svg" alt="Librería Express" />
+          <p>Autoservicio mayorista de librería comercial, escolar y de oficina. Stock permanente y entregas coordinadas en toda la provincia de Tucumán.</p>
+        </div>
+        <nav class="footer__links">
+          <a href="index.html#categorias">Categorías</a>
+          <a href="catalogo.html">Catálogo y Precios</a>
+          <a href="index.html#empresas">Empresas</a>
+          <a href="index.html#contacto">Contacto</a>
+        </nav>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 Librería Express. Todos los derechos reservados. · Autoservicio Mayorista</p>
+      </div>
+    </div>
+  </footer>
+
+  <a class="flotante" href="https://wa.me/5493816090957?text=Hola%20Librer%C3%ADa%20Express!" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg class="ico"><use href="#i-message"/></svg> <span>WhatsApp</span>
+  </a>
+
+  <script src="catalogo.js?v=1"></script>
+</body>
+</html>
