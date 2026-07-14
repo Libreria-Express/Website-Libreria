@@ -12,7 +12,9 @@
     filtroCatPanel: document.getElementById('filtro-cat-panel'),
     filtroCatBuscar: document.getElementById('filtro-cat-buscar'),
     filtroCatLimpiar: document.getElementById('filtro-cat-limpiar'),
+    filtroCatCerrar: document.getElementById('filtro-cat-cerrar'),
     filtroCatLista: document.getElementById('filtro-cat-lista'),
+    filtroCatChips: document.getElementById('filtro-cat-chips'),
     meta: document.getElementById('catalogo-meta'),
     lista: document.getElementById('catalogo-lista'),
     btnAbrirPedido: document.getElementById('btn-abrir-pedido'),
@@ -108,6 +110,40 @@
     } else {
       els.filtroCatLabel.textContent = n + ' categorías seleccionadas'
     }
+  }
+
+  function renderChipsCategorias() {
+    if (!categoriasSeleccionadas.size) {
+      els.filtroCatChips.hidden = true
+      els.filtroCatChips.innerHTML = ''
+      return
+    }
+    els.filtroCatChips.hidden = false
+    els.filtroCatChips.innerHTML =
+      [...categoriasSeleccionadas].map((cat) =>
+        '<span class="chip-cat" data-cat="' + escapeHtml(cat) + '">' +
+        escapeHtml(formatoLegible(cat)) +
+        '<button type="button" aria-label="Quitar categoría ' + escapeHtml(formatoLegible(cat)) + '">×</button>' +
+        '</span>'
+      ).join('') +
+      '<button type="button" class="chip-cat-limpiar" id="chip-cat-limpiar-todo">Limpiar todo</button>'
+  }
+
+  function quitarCategoriaSeleccionada(cat) {
+    categoriasSeleccionadas.delete(cat)
+    const checkbox = els.filtroCatLista.querySelector('input[type="checkbox"][value="' + CSS.escape(cat) + '"]')
+    if (checkbox) checkbox.checked = false
+    actualizarLabelFiltroCat()
+    renderChipsCategorias()
+    aplicarFiltro()
+  }
+
+  function limpiarCategoriasSeleccionadas() {
+    categoriasSeleccionadas.clear()
+    els.filtroCatLista.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = false })
+    actualizarLabelFiltroCat()
+    renderChipsCategorias()
+    aplicarFiltro()
   }
 
   function abrirPanelCategorias() {
@@ -411,16 +447,22 @@
     if (checkbox.checked) categoriasSeleccionadas.add(checkbox.value)
     else categoriasSeleccionadas.delete(checkbox.value)
     actualizarLabelFiltroCat()
+    renderChipsCategorias()
     aplicarFiltro()
   })
 
   els.filtroCatBuscar.addEventListener('input', filtrarListaCategorias)
 
-  els.filtroCatLimpiar.addEventListener('click', () => {
-    categoriasSeleccionadas.clear()
-    els.filtroCatLista.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = false })
-    actualizarLabelFiltroCat()
-    aplicarFiltro()
+  els.filtroCatLimpiar.addEventListener('click', limpiarCategoriasSeleccionadas)
+  els.filtroCatCerrar.addEventListener('click', cerrarPanelCategorias)
+
+  els.filtroCatChips.addEventListener('click', (e) => {
+    if (e.target.closest('#chip-cat-limpiar-todo')) {
+      limpiarCategoriasSeleccionadas()
+      return
+    }
+    const chip = e.target.closest('.chip-cat')
+    if (chip && e.target.closest('button')) quitarCategoriaSeleccionada(chip.dataset.cat)
   })
 
   document.addEventListener('click', (e) => {

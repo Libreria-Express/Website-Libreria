@@ -68,15 +68,21 @@
             <svg class="ico"><use href="#i-chevron"/></svg>
           </button>
           <div class="filtro-cat__panel" id="filtro-cat-panel" hidden>
-            <label class="filtro-cat__buscar">
-              <svg class="ico"><use href="#i-search"/></svg>
-              <input type="search" id="filtro-cat-buscar" placeholder="Buscar categoría..." autocomplete="off" />
-            </label>
+            <div class="filtro-cat__panel-head">
+              <label class="filtro-cat__buscar">
+                <svg class="ico"><use href="#i-search"/></svg>
+                <input type="search" id="filtro-cat-buscar" placeholder="Buscar categoría..." autocomplete="off" />
+              </label>
+              <button type="button" class="filtro-cat__cerrar" id="filtro-cat-cerrar" aria-label="Cerrar categorías">
+                <svg class="ico"><use href="#i-x"/></svg>
+              </button>
+            </div>
             <button type="button" class="filtro-cat__limpiar" id="filtro-cat-limpiar">Limpiar selección</button>
             <ul class="filtro-cat__lista" id="filtro-cat-lista"></ul>
           </div>
         </div>
       </div>
+      <div class="filtro-cat-chips" id="filtro-cat-chips" hidden></div>
       <p class="catalogo-meta" id="catalogo-meta">Cargando catálogo…</p>
     </section>
 

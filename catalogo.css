@@ -29,7 +29,7 @@
 }
 .buscador .ico { width: 19px; height: 19px; color: rgba(10,15,28,.4); flex: none; }
 .buscador input {
-  border: none; outline: none; font: inherit; width: 100%; background: transparent; color: var(--ink);
+  border: none; outline: none; font: inherit; font-size: 16px; width: 100%; background: transparent; color: var(--ink);
 }
 /* ===== Filtro de categorías (multi-selección con buscador) ===== */
 .filtro-cat { position: relative; flex: 0 1 280px; }
@@ -50,12 +50,19 @@
   padding: 12px; display: flex; flex-direction: column; gap: 8px;
   max-height: 360px;
 }
+.filtro-cat__panel-head { display: flex; align-items: center; gap: 8px; flex: none; }
 .filtro-cat__buscar {
-  display: flex; align-items: center; gap: 8px; background: var(--bg);
-  border-radius: 999px; padding: 9px 14px; flex: none;
+  flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 8px; background: var(--bg);
+  border-radius: 999px; padding: 9px 14px;
 }
 .filtro-cat__buscar .ico { width: 15px; height: 15px; color: rgba(10,15,28,.4); flex: none; }
-.filtro-cat__buscar input { border: none; outline: none; font: inherit; font-size: 14px; width: 100%; background: transparent; color: var(--ink); }
+.filtro-cat__buscar input { border: none; outline: none; font: inherit; font-size: 16px; width: 100%; background: transparent; color: var(--ink); }
+.filtro-cat__cerrar {
+  flex: none; width: 34px; height: 34px; border-radius: 999px; border: none; background: var(--bg);
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.filtro-cat__cerrar .ico { width: 16px; height: 16px; color: rgba(10,15,28,.6); }
+.filtro-cat__cerrar:hover { background: var(--line); }
 
 .filtro-cat__limpiar {
   flex: none; align-self: flex-start; background: none; border: none; color: var(--navy);
@@ -72,6 +79,25 @@
 .filtro-cat__lista label:hover { background: var(--bg); }
 .filtro-cat__lista input[type="checkbox"] { flex: none; width: 16px; height: 16px; accent-color: var(--navy); cursor: pointer; }
 .filtro-cat__vacio { padding: 10px 6px; font-size: 13px; color: rgba(10,15,28,.45); }
+
+.filtro-cat-chips[hidden] { display: none; }
+.filtro-cat-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.chip-cat {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,62,123,.08); color: var(--navy); font-size: 13px; font-weight: 600;
+  border-radius: 999px; padding: 6px 8px 6px 14px;
+}
+.chip-cat button {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 999px; border: none; cursor: pointer;
+  background: rgba(0,62,123,.15); color: var(--navy); font-size: 13px; line-height: 1;
+}
+.chip-cat button:hover { background: var(--navy); color: #fff; }
+.chip-cat-limpiar {
+  background: none; border: none; color: rgba(10,15,28,.5); font-size: 13px; font-weight: 600;
+  cursor: pointer; padding: 6px 4px;
+}
+.chip-cat-limpiar:hover { color: #c0392b; }
 
 .catalogo-meta { margin-top: 14px; font-size: 14px; color: rgba(10,15,28,.55); }
 .catalogo-meta strong { color: var(--navy); }
