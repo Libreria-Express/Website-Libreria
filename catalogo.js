@@ -519,6 +519,12 @@
     filas.forEach((f) => actualizarCantidadEnFila(f.id))
     actualizarBadge()
     aplicarFiltro()
+    trackearEvento('ViewContent', {
+      content_type: 'product_group',
+      content_name: 'Catálogo Librería Express',
+      content_ids: ['catalogo-completo'],
+      num_items: productos.length,
+    })
   }
 
   init()
