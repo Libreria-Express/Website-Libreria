@@ -1,7 +1,26 @@
 const XLSX = require('xlsx')
-const { put } = require('@vercel/blob')
-const { BLOB_PATHNAME, parsePrice, normalizarTexto, withIds, esPlantillaSimple, parseFilasPorFamilia } = require('./_catalogo')
+const { put, get } = require('@vercel/blob')
+const fallback = require('../data/catalogo-inicial.json')
+const {
+  BLOB_PATHNAME,
+  parsePrice,
+  normalizarTexto,
+  withIds,
+  esPlantillaSimple,
+  parseFilasPorFamilia,
+  fusionarImagenes,
+} = require('./_catalogo')
 const { isAuthenticated } = require('./_auth')
+
+async function catalogoActual() {
+  try {
+    const resultado = await get(BLOB_PATHNAME, { access: 'public', useCache: false })
+    if (!resultado || resultado.statusCode !== 200) return fallback
+    return await new Response(resultado.stream).json()
+  } catch (err) {
+    return fallback
+  }
+}
 
 const MAX_BASE64_LENGTH = 15 * 1024 * 1024 // ~10 MB de archivo original en base64
 
@@ -53,12 +72,15 @@ module.exports = async function handler(req, res) {
       const categoria = normalizarTexto(fila.Categoria ?? fila.categoria ?? '')
       const producto = normalizarTexto(fila.Producto ?? fila.producto ?? '')
       const precio = parsePrice(fila.Precio ?? fila.precio)
+      const imagenUrl = normalizarTexto(fila.ImagenURL ?? fila.imagenurl ?? fila.ImagenUrl ?? '')
 
       if (!categoria || !producto || !Number.isFinite(precio) || precio <= 0) {
         descartadas.push({ fila: idx + 2, motivo: 'Falta categoría/producto o el precio no es válido' })
         return
       }
-      productos.push({ categoria, producto, precio })
+      const item = { categoria, producto, precio }
+      if (imagenUrl) item.imagen = imagenUrl
+      productos.push(item)
     })
   } else {
     // Export "crudo" del sistema interno: filas agrupadas por familia.
@@ -74,7 +96,10 @@ module.exports = async function handler(req, res) {
     return
   }
 
-  await put(BLOB_PATHNAME, JSON.stringify(withIds(productos)), {
+  const conIds = withIds(productos)
+  const conImagenesPreservadas = fusionarImagenes(conIds, await catalogoActual())
+
+  await put(BLOB_PATHNAME, JSON.stringify(conImagenesPreservadas), {
     access: 'public',
     addRandomSuffix: false,
     allowOverwrite: true,

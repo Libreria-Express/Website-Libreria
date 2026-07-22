@@ -86,6 +86,41 @@ function withIds(productos) {
   })
 }
 
+// Conserva la imagen de un producto entre actualizaciones de precios: si el
+// Excel trae una ImagenURL para esa fila, esa gana; si no, se mantiene la que
+// ya estaba publicada para ese mismo id.
+function fusionarImagenes(productosNuevos, catalogoActual) {
+  const imagenesActuales = new Map(
+    (catalogoActual || []).filter((p) => p.imagen).map((p) => [p.id, p.imagen])
+  )
+  return productosNuevos.map((p) => {
+    if (p.imagen) return p
+    const imagenPrevia = imagenesActuales.get(p.id)
+    return imagenPrevia ? { ...p, imagen: imagenPrevia } : p
+  })
+}
+
+// Mapa { id: "/imagenes-productos/id.webp" } commiteado a git. Es la fuente
+// de verdad para las fotos de producto (no Blob): tanto el flujo de revisión
+// local (scripts/revisar-candidatos.js) como el admin en producción
+// (api/admin-imagen.js, vía GitHub API) escriben acá. Cada deploy nuevo
+// re-empaqueta este JSON, así que siempre refleja el último commit.
+let imagenesAsignadas = {}
+try {
+  imagenesAsignadas = require('../data/imagenes-asignadas.json')
+} catch {
+  imagenesAsignadas = {}
+}
+
+// Pisa el campo `imagen` de cada producto con lo que haya en
+// data/imagenes-asignadas.json, si existe una entrada para ese id. Se aplica
+// SIEMPRE encima del catálogo (venga de Blob o del respaldo local), para que
+// las fotos no dependan de Blob para nada.
+function aplicarImagenesAsignadas(productos) {
+  if (!imagenesAsignadas || !Object.keys(imagenesAsignadas).length) return productos
+  return productos.map((p) => (imagenesAsignadas[p.id] ? { ...p, imagen: imagenesAsignadas[p.id] } : p))
+}
+
 module.exports = {
   BLOB_PATHNAME,
   COLUMNAS,
@@ -95,4 +130,6 @@ module.exports = {
   withIds,
   esPlantillaSimple,
   parseFilasPorFamilia,
+  fusionarImagenes,
+  aplicarImagenesAsignadas,
 }

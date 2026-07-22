@@ -60,18 +60,63 @@
           </div>
         </div>
 
+        <div class="admin-imagenes">
+          <h2>3. Imágenes de productos</h2>
+          <p>Buscá un producto y subí o reemplazá su foto. Se guarda como miniatura optimizada automáticamente.</p>
+          <div class="admin-imagenes__toolbar">
+            <input type="search" id="imagen-buscar" placeholder="Buscar producto para agregarle una foto..." autocomplete="off" />
+            <label class="admin-imagenes__filtro">
+              <input type="checkbox" id="imagen-solo-sin-foto" />
+              Mostrar solo productos sin foto (<span id="imagen-sin-foto-total">0</span>)
+            </label>
+          </div>
+          <ul class="admin-imagenes__lista" id="imagen-lista"></ul>
+          <div class="admin-imagenes__paginado" id="imagen-paginado" hidden>
+            <button type="button" id="imagen-anterior">‹ Anterior</button>
+            <span id="imagen-pagina"></span>
+            <button type="button" id="imagen-siguiente">Siguiente ›</button>
+          </div>
+        </div>
+
+        <div class="admin-revision">
+          <h2>4. Revisión de imágenes automáticas</h2>
+          <p>
+            Estas fotos se completaron automáticamente buscando en internet por nombre y marca.
+            No son fotos reales del producto: muchas están mal (objetos, personas o escenas que
+            no tienen nada que ver). Marcá las que estén mal y descartalas — el producto queda
+            sin foto hasta que subas la correcta a mano (sección 3) o corras de nuevo el script
+            de búsqueda.
+          </p>
+          <div class="admin-revision__toolbar">
+            <button type="button" class="btn btn--navy" id="btn-revision-cargar">Cargar imágenes para revisar</button>
+            <span class="admin-revision__contador" id="revision-contador"></span>
+          </div>
+          <div class="admin-revision__grid" id="revision-grid" hidden></div>
+          <div class="admin-revision__paginado" id="revision-paginado" hidden>
+            <button type="button" id="revision-anterior">‹ Anterior</button>
+            <span id="revision-pagina"></span>
+            <button type="button" id="revision-siguiente">Siguiente ›</button>
+          </div>
+          <div class="admin-revision__acciones" id="revision-acciones" hidden>
+            <button type="button" class="admin-revision__descartar" id="btn-revision-descartar">
+              Descartar seleccionadas (<span id="revision-seleccion-count">0</span>)
+            </button>
+            <span class="admin-revision__estado" id="revision-estado"></span>
+          </div>
+        </div>
+
         <div class="admin-ayuda">
           <h2>Formato del Excel</h2>
           <p>Podés subir directamente el Excel tal cual lo exporta el sistema interno (la lista agrupada por familia, igual a la lista de precios de siempre) — se reconoce automáticamente, sin necesidad de reformatear nada.</p>
-          <p>También se acepta una planilla simple con estas tres columnas (en cualquier orden, con estos nombres exactos):</p>
+          <p>También se acepta una planilla simple con estas columnas (en cualquier orden, con estos nombres exactos; <strong>ImagenURL</strong> es opcional):</p>
           <table class="admin-tabla">
-            <thead><tr><th>Categoria</th><th>Producto</th><th>Precio</th></tr></thead>
+            <thead><tr><th>Categoria</th><th>Producto</th><th>Precio</th><th>ImagenURL</th></tr></thead>
             <tbody>
-              <tr><td>Resmas</td><td>Resma A4 Chamex x 500 hojas</td><td>5500</td></tr>
-              <tr><td>Escritura</td><td>Bolígrafo Bic Cristal Azul</td><td>350,50</td></tr>
+              <tr><td>Resmas</td><td>Resma A4 Chamex x 500 hojas</td><td>5500</td><td></td></tr>
+              <tr><td>Escritura</td><td>Bolígrafo Bic Cristal Azul</td><td>350,50</td><td>https://...</td></tr>
             </tbody>
           </table>
-          <p class="admin-nota">Las filas sin categoría, sin producto o con un precio inválido se descartan automáticamente y se avisa cuáles fueron.</p>
+          <p class="admin-nota">Las filas sin categoría, sin producto o con un precio inválido se descartan automáticamente y se avisa cuáles fueron. Las fotos que subiste desde la sección de arriba no se pierden al actualizar precios, salvo que el Excel traiga una ImagenURL nueva para ese producto.</p>
         </div>
       </section>
     </div>

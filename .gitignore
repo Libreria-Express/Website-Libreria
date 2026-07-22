@@ -1,4 +1,8 @@
 node_modules/
+.venv-enrich/
 .vercel/
 .vercel
 .env*
+data/enrich-imagenes-checkpoint.json
+.env.vercel.pull
+data/candidatos/

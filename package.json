@@ -3,8 +3,19 @@
   "private": true,
   "version": "1.0.0",
   "description": "Sitio de Librería Express: marketing estático + catálogo de precios + admin",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "enrich-imagenes": "node scripts/enrich-imagenes.js --engine ddg",
+    "enrich-imagenes:dry": "node scripts/enrich-imagenes.js --engine ddg --dry-run --only-missing",
+    "enrich-imagenes:pilot": "node scripts/enrich-imagenes.js --engine ddg --only-missing --limit 20",
+    "candidatos:buscar": "node scripts/buscar-candidatos.js --engine ddg --only-missing",
+    "candidatos:revisar": "node scripts/revisar-candidatos.js"
+  },
   "dependencies": {
     "@vercel/blob": "^2.6.1",
+    "sharp": "^0.35.3",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

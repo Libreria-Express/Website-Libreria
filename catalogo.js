@@ -207,10 +207,15 @@
         grupos.set(p.categoria, grupo)
       }
 
+      const foto = p.imagen
+        ? '<img class="prod__foto" src="' + escapeHtml(p.imagen) + '" alt="" loading="lazy" decoding="async" />'
+        : '<div class="prod__foto prod__foto--vacio" aria-hidden="true"></div>'
+
       const li = document.createElement('li')
       li.className = 'prod'
       li.dataset.id = p.id
       li.innerHTML =
+        foto +
         '<div class="prod__info">' +
         '<p class="prod__nombre">' + escapeHtml(formatoLegible(p.producto)) + '</p>' +
         '<p class="prod__precio">' + formatPrecio(p.precio) + '</p>' +
