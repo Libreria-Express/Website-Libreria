@@ -35,6 +35,10 @@
     pedidoMinimoAviso: document.getElementById('pedido-minimo-aviso'),
     btnEnviarPedido: document.getElementById('btn-enviar-pedido'),
     btnVaciarPedido: document.getElementById('btn-vaciar-pedido'),
+    lightbox: document.getElementById('lightbox'),
+    lightboxImg: document.getElementById('lightbox-img'),
+    lightboxNombre: document.getElementById('lightbox-nombre'),
+    btnCerrarLightbox: document.getElementById('btn-cerrar-lightbox'),
   }
 
   const moneda = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' })
@@ -393,6 +397,25 @@
     setTimeout(() => { els.overlay.hidden = true }, 200)
   }
 
+  // ===== Lightbox (ver foto de producto ampliada) =====
+  function abrirLightbox(src, nombre) {
+    els.lightboxImg.src = src
+    els.lightboxImg.alt = nombre
+    els.lightboxNombre.textContent = nombre
+    els.lightbox.hidden = false
+    requestAnimationFrame(() => els.lightbox.classList.add('activo'))
+    els.lightbox.setAttribute('aria-hidden', 'false')
+  }
+
+  function cerrarLightbox() {
+    els.lightbox.classList.remove('activo')
+    els.lightbox.setAttribute('aria-hidden', 'true')
+    setTimeout(() => {
+      els.lightbox.hidden = true
+      els.lightboxImg.src = ''
+    }, 200)
+  }
+
   function construirMensajeWhatsApp() {
     const items = Object.values(cart)
     const lineas = items.map((item) =>
@@ -436,6 +459,12 @@
     const item = e.target.closest('.prod')
     if (!item) return
     const id = item.dataset.id
+    const foto = e.target.closest('img.prod__foto')
+    if (foto) {
+      const producto = productoPorId(id)
+      abrirLightbox(foto.src, formatoLegible(producto ? producto.producto : ''))
+      return
+    }
     if (e.target.closest('.prod__agregar')) {
       setCantidad(id, (cart[id]?.cantidad || 0) + 1)
       return
@@ -503,8 +532,13 @@
   els.overlay.addEventListener('click', cerrarPedido)
   els.btnEnviarPedido.addEventListener('click', enviarPedidoPorWhatsApp)
   els.btnVaciarPedido.addEventListener('click', vaciarPedido)
+  els.btnCerrarLightbox.addEventListener('click', cerrarLightbox)
+  els.lightbox.addEventListener('click', (e) => {
+    if (e.target === els.lightbox) cerrarLightbox()
+  })
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return
+    if (els.lightbox.classList.contains('activo')) { cerrarLightbox(); return }
     if (els.panel.classList.contains('activo')) cerrarPedido()
     if (!els.filtroCatPanel.hidden) cerrarPanelCategorias()
   })

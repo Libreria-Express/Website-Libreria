@@ -6,3 +6,8 @@ node_modules/
 data/enrich-imagenes-checkpoint.json
 .env.vercel.pull
 data/candidatos/
+# Carpetas/archivos de pruebas viejas (proof of concept previo a Blob→git),
+# ya no se usan: no hace falta subirlas al repo.
+data/imagenes-producto/
+data/imagenes-marca/
+data/catalogo-prueba-imagenes.json

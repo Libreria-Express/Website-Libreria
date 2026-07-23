@@ -11,7 +11,9 @@
     "enrich-imagenes:dry": "node scripts/enrich-imagenes.js --engine ddg --dry-run --only-missing",
     "enrich-imagenes:pilot": "node scripts/enrich-imagenes.js --engine ddg --only-missing --limit 20",
     "candidatos:buscar": "node scripts/buscar-candidatos.js --engine ddg --only-missing",
-    "candidatos:revisar": "node scripts/revisar-candidatos.js"
+    "candidatos:revisar": "node scripts/revisar-candidatos.js",
+    "preview:local": "node scripts/preview-local.js",
+    "dev:local": "node scripts/dev-server.js"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",

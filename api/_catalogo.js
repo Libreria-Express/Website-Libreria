@@ -1,4 +1,7 @@
 // Utilidades compartidas por las funciones que leen/escriben el catálogo.
+const fs = require('fs')
+const path = require('path')
+
 const BLOB_PATHNAME = 'catalogo/catalogo.json'
 const COLUMNAS = ['Categoria', 'Producto', 'Precio']
 
@@ -103,13 +106,22 @@ function fusionarImagenes(productosNuevos, catalogoActual) {
 // Mapa { id: "/imagenes-productos/id.webp" } commiteado a git. Es la fuente
 // de verdad para las fotos de producto (no Blob): tanto el flujo de revisión
 // local (scripts/revisar-candidatos.js) como el admin en producción
-// (api/admin-imagen.js, vía GitHub API) escriben acá. Cada deploy nuevo
-// re-empaqueta este JSON, así que siempre refleja el último commit.
-let imagenesAsignadas = {}
-try {
-  imagenesAsignadas = require('../data/imagenes-asignadas.json')
-} catch {
-  imagenesAsignadas = {}
+// (api/admin-imagen.js, vía GitHub API) escriben acá.
+//
+// OJO: se lee con fs.readFileSync en cada llamada (no con require) a
+// propósito. Con require() el JSON queda cacheado en memoria para toda la
+// vida del proceso: en producción no importa porque cada commit dispara un
+// deploy nuevo (proceso nuevo), pero en local (dev-server.js corriendo largo
+// tiempo mientras revisar-candidatos.js sigue escribiendo el archivo) el
+// admin quedaba mostrando una foto vieja de cuántos productos tenían imagen.
+const IMAGENES_ASIGNADAS_PATH = path.join(__dirname, '..', 'data', 'imagenes-asignadas.json')
+
+function cargarImagenesAsignadas() {
+  try {
+    return JSON.parse(fs.readFileSync(IMAGENES_ASIGNADAS_PATH, 'utf8'))
+  } catch {
+    return {}
+  }
 }
 
 // Pisa el campo `imagen` de cada producto con lo que haya en
@@ -117,6 +129,7 @@ try {
 // SIEMPRE encima del catálogo (venga de Blob o del respaldo local), para que
 // las fotos no dependan de Blob para nada.
 function aplicarImagenesAsignadas(productos) {
+  const imagenesAsignadas = cargarImagenesAsignadas()
   if (!imagenesAsignadas || !Object.keys(imagenesAsignadas).length) return productos
   return productos.map((p) => (imagenesAsignadas[p.id] ? { ...p, imagen: imagenesAsignadas[p.id] } : p))
 }

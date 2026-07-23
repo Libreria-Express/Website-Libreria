@@ -26,6 +26,7 @@ const {
   optimizar,
   guardarImagenComoArchivo,
   descargarImagenDetallada,
+  cargarImagenesAsignadas,
 } = require('./enrich-imagenes')
 
 const ROOT = path.join(__dirname, '..')
@@ -41,9 +42,37 @@ const MIME = {
   '.gif': 'image/gif',
 }
 
+// Reconcilia el índice contra data/imagenes-asignadas.json, que es la fuente
+// de verdad real de "qué producto ya tiene foto". Si algo quedó con foto
+// asignada (por ejemplo, aplicada desde /admin en vez de esta herramienta)
+// pero el índice todavía dice "pendiente", se corrige acá — así nunca vuelve
+// a aparecer como pendiente algo que ya está resuelto, sin importar por
+// dónde se aplicó.
+function reconciliarIndex(index) {
+  const asignadas = cargarImagenesAsignadas()
+  let cambios = 0
+  for (const p of index.productos) {
+    const rutaAsignada = asignadas[p.id]
+    if (rutaAsignada && p.estado !== 'aplicado') {
+      p.estado = 'aplicado'
+      p.imagenAplicada = rutaAsignada
+      p.origen = p.origen || 'externo (admin u otra herramienta)'
+      p.aplicadoAt = p.aplicadoAt || new Date().toISOString()
+      cambios++
+    }
+  }
+  if (cambios) {
+    index.actualizado = new Date().toISOString()
+    guardarIndex(index)
+    console.log(`Reconciliados ${cambios} producto(s) que ya tenían foto asignada pero el índice decía "pendiente".`)
+  }
+  return index
+}
+
 function leerIndex() {
   if (!fs.existsSync(INDEX_PATH)) return { productos: [] }
-  return JSON.parse(fs.readFileSync(INDEX_PATH, 'utf8'))
+  const index = JSON.parse(fs.readFileSync(INDEX_PATH, 'utf8'))
+  return reconciliarIndex(index)
 }
 
 function guardarIndex(index) {
